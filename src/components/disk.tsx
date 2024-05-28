@@ -4,19 +4,6 @@ import { useControls } from "leva";
 import { RGBELoader } from "three-stdlib";
 import { useDiskStore } from "../store/store";
 
-const Disks = () => {
-  const disks = useDiskStore((state) => state.disks);
-  return disks.map((d, index) => (
-    <Disk
-      key={index}
-      position={d.position}
-      rotation={d.face ? [Math.PI, 0, 0] : [0, 0, 0]}
-    />
-  ));
-};
-
-export default Disks;
-
 export const Disk = (props: GroupProps) => {
   const { ...config } = useControls({
     backside: true,
@@ -65,3 +52,16 @@ export const Disk = (props: GroupProps) => {
     </group>
   );
 };
+
+const Disks = () => {
+  const disks = useDiskStore((state) => state.disks);
+  return disks.map((d, index) => (
+    <Disk
+      key={index}
+      position={d.position}
+      rotation={d.face ? [Math.PI, 0, 0] : [0, 0, 0]}
+    />
+  ));
+};
+
+export default Disks;
