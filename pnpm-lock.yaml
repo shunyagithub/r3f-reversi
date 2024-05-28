@@ -35,6 +35,9 @@ importers:
       three-stdlib:
         specifier: ^2.30.1
         version: 2.30.1(three@0.160.1)
+      zustand:
+        specifier: ^4.5.2
+        version: 4.5.2(@types/react@18.2.48)(react@18.2.0)
     devDependencies:
       '@types/react':
         specifier: ^18.2.43
@@ -1907,8 +1910,8 @@ packages:
       react:
         optional: true
 
-  zustand@4.5.0:
-    resolution: {integrity: sha512-zlVFqS5TQ21nwijjhJlx4f9iGrXSL0o/+Dpy4txAP22miJ8Ti6c1Ol1RLNN98BMib83lmDH/2KmLwaNXpjrO1A==}
+  zustand@4.5.2:
+    resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
@@ -3572,7 +3575,7 @@ snapshots:
 
   tunnel-rat@0.1.2(@types/react@18.2.48)(react@18.2.0):
     dependencies:
-      zustand: 4.5.0(@types/react@18.2.48)(react@18.2.0)
+      zustand: 4.5.2(@types/react@18.2.48)(react@18.2.0)
     transitivePeerDependencies:
       - '@types/react'
       - immer
@@ -3655,7 +3658,7 @@ snapshots:
     optionalDependencies:
       react: 18.2.0
 
-  zustand@4.5.0(@types/react@18.2.48)(react@18.2.0):
+  zustand@4.5.2(@types/react@18.2.48)(react@18.2.0):
     dependencies:
       use-sync-external-store: 1.2.0(react@18.2.0)
     optionalDependencies:
