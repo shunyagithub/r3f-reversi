@@ -6,10 +6,10 @@ type Disc = {
 };
 
 const init: Disc[] = [
-  { id: 30, condition: 1 },
   { id: 40, condition: 1 },
-  { id: 31, condition: 2 },
-  { id: 39, condition: 2 },
+  { id: 50, condition: 1 },
+  { id: 41, condition: 2 },
+  { id: 49, condition: 2 },
 ];
 
 const getInitDisks = (): Disc[] => {
@@ -30,26 +30,22 @@ const initDiscs = getInitDisks();
 
 type DiscState = {
   discs: Disc[];
+  placeableDiscs: number[];
+  setPlaceableDiscs: (v: number[]) => void;
   updateDisc: (v: Disc) => void;
 };
 
 export const useDiscStore = create<DiscState>((set) => ({
   discs: [...initDiscs],
+  placeableDiscs: [],
+  setPlaceableDiscs: (v) => set(() => ({ placeableDiscs: v })),
   updateDisc: (v) => {
-    set((state) => {
-      console.log("v", v);
-      //   const filtered = state.discs.filter((disc) => {
-      //     if (disc.id !== v.id) console.log("v id", v.id);
-      //     return disc.id !== v.id;
-      //   });
-      //   console.log("filtered", filtered);
-
-      return {
-        discs: [...state.discs.filter((disc) => disc.id !== v.id), v].sort(
-          (a, b) => a.id - b.id
-        ),
-      };
-    });
+    set((state) => ({
+      ...state,
+      discs: [...state.discs.filter((disc) => disc.id !== v.id), v].sort(
+        (a, b) => a.id - b.id
+      ),
+    }));
   },
 }));
 
