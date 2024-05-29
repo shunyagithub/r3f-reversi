@@ -2,8 +2,8 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 import { Leva } from "leva";
 import Hints from "./components/hint";
-import Disks from "./components/disk";
 import Grid from "./components/Grid";
+import Discs from "./components/Disc";
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
           maxPolarAngle={Math.PI / 3}
         />
 
-        <Disks />
+        <Discs />
         <Hints />
         <Grid />
       </Canvas>

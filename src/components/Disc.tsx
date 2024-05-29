@@ -2,9 +2,11 @@ import { MeshTransmissionMaterial } from "@react-three/drei";
 import { GroupProps, useLoader } from "@react-three/fiber";
 import { useControls } from "leva";
 import { RGBELoader } from "three-stdlib";
-import { useDiskStore } from "../store/store";
+import { useDiscStore } from "../store/store";
+import * as THREE from "three";
+import { getDiscPosition } from "../reversi";
 
-export const Disk = (props: GroupProps) => {
+export const Disc = (props: GroupProps) => {
   const { ...config } = useControls({
     backside: true,
     backsideThickness: { value: 0.3, min: 0, max: 2 },
@@ -53,15 +55,16 @@ export const Disk = (props: GroupProps) => {
   );
 };
 
-const Disks = () => {
-  const disks = useDiskStore((state) => state.disks);
-  return disks.map((d, index) => (
-    <Disk
-      key={index}
-      position={d.position}
-      rotation={d.face ? [Math.PI, 0, 0] : [0, 0, 0]}
-    />
-  ));
+const Discs = () => {
+  const discs = useDiscStore((state) => state.discs);
+  return discs.map((d, index) => {
+    if (d.condition === 0) return null;
+
+    const rotation = new THREE.Euler(d.condition === 1 ? Math.PI : 0, 0, 0);
+    const position = getDiscPosition(d.id);
+
+    return <Disc key={index} position={position} rotation={rotation} />;
+  });
 };
 
-export default Disks;
+export default Discs;
