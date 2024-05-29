@@ -61,9 +61,15 @@ const Hint = ({
       }
     });
 
-    setPlacableDiscs(placeable);
-    console.log(placeable);
+    const filteredPlaceable = placeable.filter((id) => !HIDDEN_ID.includes(id)); // HIDDEN_IDに含まれる場合は除外
+    setPlacableDiscs(filteredPlaceable);
   }, [discs, turn, setPlacableDiscs]);
+
+  useEffect(() => {
+    if (placeableDiscs.length === 0) {
+      setTurn(turn === 1 ? 2 : 1);
+    }
+  }, [placeable, placeableDiscs, turn, setTurn]);
 
   const flipDisk = useCallback(
     (id: number) => {
