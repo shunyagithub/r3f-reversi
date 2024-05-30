@@ -1,5 +1,5 @@
 import { MeshProps, ThreeEvent } from "@react-three/fiber";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useDiscStore, useGameStore } from "../store/store";
 import { Text } from "@react-three/drei";
 import { HIDDEN_ID, VECT } from "../reversi";
@@ -78,7 +78,6 @@ const Hint = ({
       e.stopPropagation();
 
       if (!discExists(id) && placeable) {
-        document.body.style.cursor = "pointer";
         hover(true);
       }
     },
@@ -86,7 +85,6 @@ const Hint = ({
   );
 
   const onPointerOut = useCallback(() => {
-    document.body.style.cursor = "auto";
     hover(false);
   }, []);
 
@@ -99,6 +97,11 @@ const Hint = ({
       }
     },
     [discExists, flipDisk, id, placeable]
+  );
+
+  useEffect(
+    () => void (document.body.style.cursor = hovered ? "pointer" : "auto"),
+    [hovered]
   );
 
   return (

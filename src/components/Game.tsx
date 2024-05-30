@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { HIDDEN_ID, useGame, VECT } from "../reversi";
-import { Text } from "@react-three/drei";
+import { Edges, Text } from "@react-three/drei";
 import { useDiscStore, useGameStore } from "../store/store";
 
 const Game = () => {
@@ -53,49 +53,63 @@ const Game = () => {
 
   return (
     <>
-      <group position={[6, 0, 10]}>
-        <group position={[-0.5, 0, 0]}>
+      <group position={[-7.5, -0.12, -11]}>
+        <group position={[0, 0, -0.5]}>
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            <circleGeometry args={[0.15, 32]} />
+            <circleGeometry args={[0.5, 32]} />
             <meshStandardMaterial color={"#000000"} />
           </mesh>
           <Text
             color={"#000000"}
-            fontSize={0.3}
+            fontSize={1.45}
+            anchorX="left"
             rotation={[-Math.PI / 2, 0, 0]}
-            position={[0.3, 0.005, 0]}
+            position={[0.6, 0, 0.15]}
           >
             {score.black}
           </Text>
         </group>
 
-        <group position={[0.3, 0, 0]}>
+        <group position={[3, 0, -0.5]}>
           <mesh rotation={[-Math.PI / 2, 0, 0]}>
-            <circleGeometry args={[0.15, 32]} />
+            <circleGeometry args={[0.5, 32]} />
             <meshStandardMaterial color={"#ffffff"} />
+            <Edges color="black" />
           </mesh>
           <Text
             color={"#000000"}
-            fontSize={0.3}
+            fontSize={1.45}
+            anchorX="left"
             rotation={[-Math.PI / 2, 0, 0]}
-            position={[0.3, 0.005, 0]}
+            position={[0.6, 0, 0.15]}
           >
             {score.white}
           </Text>
         </group>
 
-        <group position={[0, 0, 1]}>
-          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0.5]}>
-            <circleGeometry args={[0.2, 32]} />
-            <meshStandardMaterial color={turn === 1 ? "#000000" : "#ffffff"} />
+        <group position={[0, 0, 1.5]}>
+          <mesh rotation={[-Math.PI / 2, 0, 0]}>
+            <circleGeometry args={[0.5, 32]} />
+            <meshStandardMaterial
+              color={winner === 1 || turn === 1 ? "#000000" : "#ffffff"}
+            />
+            <Edges color="black" />
           </mesh>
           <Text
             color={"#000000"}
-            fontSize={0.2}
+            fontSize={1.45}
+            anchorX="left"
+            position={[0.6, 0, 0.15]}
             rotation={[-Math.PI / 2, 0, 0]}
           >
             {gameover
-              ? `WINNER: ${winner}`
+              ? `WINNER: ${
+                  winner === 0
+                    ? "DRAW"
+                    : winner === 1
+                    ? "1ST PLAYER"
+                    : "2ND PLAYER"
+                }`
               : `TURN: ${turn === 1 ? "1ST PLAYER" : "2ND PLAYER"}`}
           </Text>
         </group>

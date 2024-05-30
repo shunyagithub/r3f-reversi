@@ -2,6 +2,7 @@ import { GroupProps } from "@react-three/fiber";
 import { useDiscStore } from "../store/store";
 import * as THREE from "three";
 import { getDiscPosition } from "../reversi";
+import { Edges } from "@react-three/drei";
 
 export const Disc = (props: GroupProps) => {
   return (
@@ -9,10 +10,12 @@ export const Disc = (props: GroupProps) => {
       <mesh position={[0, 0.1, 0]}>
         <cylinderGeometry args={[1, 1, 0.1, 32]} />
         <meshStandardMaterial color="#fff" />
+        <Edges color="black" />
       </mesh>
       <mesh position={[0, -0.1, 0]}>
         <cylinderGeometry args={[1, 1, 0.1, 32]} />
         <meshStandardMaterial color="#000" />
+        <Edges color="black" />
       </mesh>
     </group>
   );

@@ -17,7 +17,7 @@ export const getDiscPosition = (id: number) => {
 };
 
 export const useGame = () => {
-  let winner;
+  let winner: 0 | 1 | 2 = 0;
   let gameover = false;
 
   const discs = useDiscStore((state) => state.discs);
@@ -30,8 +30,7 @@ export const useGame = () => {
   const whitePlaceable = useDiscStore((state) => state.placeableDiscs.white);
 
   if (blackPlaceable.length === 0 && whitePlaceable.length === 0) {
-    winner =
-      black > white ? "1ST PLAYER" : black < white ? "2ND PLAYER" : "DRAW";
+    winner = black > white ? 1 : black < white ? 2 : 0;
     gameover = true;
   } else if (blackPlaceable.length === 0 && !gameover) {
     setTurn(2);
