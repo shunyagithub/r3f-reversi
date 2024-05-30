@@ -1,7 +1,7 @@
 import { MeshProps, ThreeEvent } from "@react-three/fiber";
 import { useState, useCallback, useEffect } from "react";
 import { useDiscStore, useGameStore } from "../store/store";
-import { Text } from "@react-three/drei";
+import { Edges, Text } from "@react-three/drei";
 import { HIDDEN_ID, VECT } from "../reversi";
 
 const Hint = ({
@@ -115,10 +115,11 @@ const Hint = ({
       >
         <circleGeometry args={[width / 2, 32]} />
         <meshBasicMaterial
-          color={"black"}
+          color={turn === 1 ? "black" : "#f4f4f4"}
           transparent
-          opacity={placeable ? (hovered ? 0.2 : 0.1) : 0}
+          opacity={placeable ? (hovered ? 0.5 : 0.3) : 0}
         />
+        {placeable && <Edges color="#444444" />}
       </mesh>
     </>
   );
