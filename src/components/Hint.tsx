@@ -141,6 +141,7 @@ const Hints = ({ number = 9, width = 2, height = 2 }) => {
                   y * 2 - Math.floor(number / 2) * 2 - 1,
                 ]}
                 rotation={[-Math.PI / 2, 0, 0]}
+                visible={false}
               >
                 {id}
               </Text>

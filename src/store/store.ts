@@ -6,10 +6,10 @@ type Disc = {
 };
 
 const init: Disc[] = [
-  { id: 40, condition: 1 },
-  { id: 50, condition: 1 },
-  { id: 41, condition: 2 },
-  { id: 49, condition: 2 },
+  { id: 40, condition: 2 },
+  { id: 50, condition: 2 },
+  { id: 41, condition: 1 },
+  { id: 49, condition: 1 },
 ];
 
 const getInitDisks = (): Disc[] => {
@@ -51,18 +51,18 @@ export const useDiscStore = create<DiscState>((set) => ({
 }));
 
 type GameState = {
-  turn: 1 | 2;
+  turn: 1 | 2; // 1: black, 2: white
   setTurn: (v: 1 | 2) => void;
   reset: () => void;
-  score: { white: number; black: number };
-  setScore: (v: { white: number; black: number }) => void;
+  score: { black: number; white: number };
+  setScore: (v: { black: number; white: number }) => void;
 };
 
 export const useGameStore = create<GameState>((set) => ({
   turn: 1,
   setTurn: (v) => set(() => ({ turn: v })),
   reset: () =>
-    set(() => ({ turn: 1, gameover: false, score: { white: 2, black: 2 } })),
-  score: { white: 2, black: 2 },
+    set(() => ({ turn: 1, gameover: false, score: { black: 2, white: 2 } })),
+  score: { black: 2, white: 2 },
   setScore: (v) => set(() => ({ score: v })),
 }));

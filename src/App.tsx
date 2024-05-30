@@ -12,11 +12,12 @@ function App() {
       <Canvas
         shadows
         orthographic
-        camera={{ position: [40, 40, 40], zoom: 100 }}
+        camera={{ position: [40, 40, 40], zoom: 40 }}
         gl={{ preserveDrawingBuffer: true }}
       >
         <color attach="background" args={["#f2f2f5"]} />
         <Environment preset="city" />
+
         <OrbitControls
           autoRotateSpeed={-0.1}
           zoomSpeed={0.25}
@@ -24,8 +25,8 @@ function App() {
           maxZoom={140}
           enablePan={false}
           dampingFactor={0.05}
-          minPolarAngle={Math.PI / 3}
-          maxPolarAngle={Math.PI / 3}
+          minPolarAngle={Math.PI / 4}
+          maxPolarAngle={Math.PI / 4}
         />
 
         <Game />
