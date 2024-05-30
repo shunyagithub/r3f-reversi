@@ -1,16 +1,8 @@
 import { MeshProps, ThreeEvent } from "@react-three/fiber";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { useDiscStore, useGameStore } from "../store/store";
 import { Text } from "@react-three/drei";
-
-const HIDDEN_ID = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 54, 63, 72, 81, 82, 83, 84, 85,
-  86, 87, 88, 89, 90,
-];
-const VECT = [-10, -9, -8, -1, 1, 8, 9, 10]; // 特定のDiskから8方向
-// P-10, P-9, P-8,
-// P-1, [P], P+1,
-// P+8, P+9, P+10
+import { HIDDEN_ID, VECT } from "../reversi";
 
 const Hint = ({
   id,
@@ -20,13 +12,14 @@ const Hint = ({
 }: { id: number; width: number; height: number } & MeshProps) => {
   const [hovered, hover] = useState(false);
   const placeableDiscs = useDiscStore((state) => state.placeableDiscs);
-  const setPlacableDiscs = useDiscStore((state) => state.setPlaceableDiscs);
+
   const updateDisc = useDiscStore((state) => state.updateDisc);
   const discs = useDiscStore((state) => state.discs);
   const turn = useGameStore((state) => state.turn);
   const setTurn = useGameStore((state) => state.setTurn);
 
-  const placeable = placeableDiscs.includes(id);
+  const placeable = placeableDiscs[turn === 1 ? "black" : "white"].includes(id);
+  // const placeable = true;
 
   const discExists = useCallback(
     (id: number) => {
@@ -34,42 +27,6 @@ const Hint = ({
     },
     [discs]
   );
-
-  useEffect(() => {
-    const placeable: number[] = [];
-    discs.forEach((disc) => {
-      if (disc.condition !== 0) return;
-
-      const p = disc.id;
-      const oposite = turn === 1 ? 2 : 1;
-
-      for (let i = 0; i < VECT.length; i++) {
-        const vect = VECT[i];
-        let n = p + vect;
-
-        let flip = 0;
-
-        while (discs[n]?.condition === oposite) {
-          flip++;
-          n += vect;
-        }
-
-        if (flip > 0 && discs[n]?.condition === turn) {
-          placeable.push(p);
-          break;
-        }
-      }
-    });
-
-    const filteredPlaceable = placeable.filter((id) => !HIDDEN_ID.includes(id)); // HIDDEN_IDに含まれる場合は除外
-    setPlacableDiscs(filteredPlaceable);
-  }, [discs, turn, setPlacableDiscs]);
-
-  useEffect(() => {
-    if (placeableDiscs.length === 0) {
-      setTurn(turn === 1 ? 2 : 1);
-    }
-  }, [placeable, placeableDiscs, turn, setTurn]);
 
   const flipDisk = useCallback(
     (id: number) => {

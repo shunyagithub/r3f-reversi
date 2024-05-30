@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 type Disc = {
   id: number;
-  condition: 0 | 1 | 2; // 0: none, 1: white, 2: black
+  condition: 0 | 1 | 2; // 0: none, 1: black, 2: white
 };
 
 const init: Disc[] = [
@@ -30,15 +30,16 @@ const initDiscs = getInitDisks();
 
 type DiscState = {
   discs: Disc[];
-  placeableDiscs: number[];
-  setPlaceableDiscs: (v: number[]) => void;
+  placeableDiscs: { black: number[]; white: number[] };
+  setPlaceableDiscs: (v: { black: number[]; white: number[] }) => void;
   updateDisc: (v: Disc) => void;
 };
 
 export const useDiscStore = create<DiscState>((set) => ({
   discs: [...initDiscs],
-  placeableDiscs: [],
-  setPlaceableDiscs: (v) => set(() => ({ placeableDiscs: v })),
+  placeableDiscs: { black: [], white: [] },
+  setPlaceableDiscs: (v) =>
+    set(() => ({ placeableDiscs: { black: v.black, white: v.white } })),
   updateDisc: (v) => {
     set((state) => ({
       ...state,
@@ -53,8 +54,6 @@ type GameState = {
   turn: 1 | 2;
   setTurn: (v: 1 | 2) => void;
   reset: () => void;
-  gameover: boolean;
-  setGameover: (v: boolean) => void;
   score: { white: number; black: number };
   setScore: (v: { white: number; black: number }) => void;
 };
@@ -64,8 +63,6 @@ export const useGameStore = create<GameState>((set) => ({
   setTurn: (v) => set(() => ({ turn: v })),
   reset: () =>
     set(() => ({ turn: 1, gameover: false, score: { white: 2, black: 2 } })),
-  gameover: false,
-  setGameover: (v) => set(() => ({ gameover: v })),
   score: { white: 2, black: 2 },
   setScore: (v) => set(() => ({ score: v })),
 }));
