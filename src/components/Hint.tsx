@@ -1,5 +1,5 @@
 import { MeshProps, ThreeEvent } from "@react-three/fiber";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { useDiscStore, useGameStore } from "../store/store";
 import { Edges, Text } from "@react-three/drei";
 import { HIDDEN_ID, VECT } from "../reversi";
@@ -104,6 +104,14 @@ const Hint = ({
     [hovered]
   );
 
+  const hintColor = useMemo(() => {
+    if (turn === 1) {
+      return hovered ? "#000" : "#999";
+    } else {
+      return hovered ? "#999" : "#fff";
+    }
+  }, [turn, hovered]);
+
   return (
     <>
       <mesh
@@ -114,10 +122,10 @@ const Hint = ({
         onClick={onClick}
       >
         <circleGeometry args={[width / 2, 32]} />
-        <meshBasicMaterial
-          color={turn === 1 ? "black" : "#f4f4f4"}
+        <meshStandardMaterial
+          color={hintColor}
           transparent
-          opacity={placeable ? (hovered ? 0.5 : 0.3) : 0}
+          opacity={placeable ? 1 : 0}
         />
         {placeable && <Edges color="#444444" />}
       </mesh>
