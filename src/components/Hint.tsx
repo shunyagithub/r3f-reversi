@@ -7,9 +7,8 @@ import { HIDDEN_ID, VECT } from "../reversi";
 const Hint = ({
   id,
   width,
-  height,
   ...props
-}: { id: number; width: number; height: number } & MeshProps) => {
+}: { id: number; width: number } & MeshProps) => {
   const [hovered, hover] = useState(false);
   const placeableDiscs = useDiscStore((state) => state.placeableDiscs);
 
@@ -19,7 +18,6 @@ const Hint = ({
   const setTurn = useGameStore((state) => state.setTurn);
 
   const placeable = placeableDiscs[turn === 1 ? "black" : "white"].includes(id);
-  // const placeable = true;
 
   const discExists = useCallback(
     (id: number) => {
@@ -80,11 +78,17 @@ const Hint = ({
       e.stopPropagation();
 
       if (!discExists(id) && placeable) {
+        document.body.style.cursor = "pointer";
         hover(true);
       }
     },
     [discExists, placeable, id]
   );
+
+  const onPointerOut = useCallback(() => {
+    document.body.style.cursor = "auto";
+    hover(false);
+  }, []);
 
   const onClick = useCallback(
     (e: ThreeEvent<MouseEvent>) => {
@@ -98,24 +102,26 @@ const Hint = ({
   );
 
   return (
-    <mesh
-      rotation={[-Math.PI / 2, 0, 0]}
-      {...props}
-      onPointerOver={onPointerOver}
-      onPointerOut={() => hover(false)}
-      onClick={onClick}
-    >
-      <planeGeometry args={[width, height, 4]} />
-      <meshBasicMaterial
-        color={"blue"}
-        transparent
-        opacity={placeable ? (hovered ? 0.1 : 0.05) : 0}
-      />
-    </mesh>
+    <>
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        {...props}
+        onPointerOver={onPointerOver}
+        onPointerOut={onPointerOut}
+        onClick={onClick}
+      >
+        <circleGeometry args={[width / 2, 32]} />
+        <meshBasicMaterial
+          color={"black"}
+          transparent
+          opacity={placeable ? (hovered ? 0.2 : 0.1) : 0}
+        />
+      </mesh>
+    </>
   );
 };
 
-const Hints = ({ number = 9, width = 2, height = 2 }) => {
+const Hints = ({ number = 9, width = 2 }) => {
   return (
     <group position={[0, -0.13, 0]}>
       {Array.from({ length: number + 1 }, (_, y) =>
@@ -132,7 +138,6 @@ const Hints = ({ number = 9, width = 2, height = 2 }) => {
                   y * 2 - Math.floor(number / 2) * 2 - 1,
                 ]}
                 width={width}
-                height={height}
               />
               <Text
                 position={[
