@@ -14,7 +14,6 @@
     "@react-three/drei": "^9.96.1",
     "@react-three/fiber": "^8.15.15",
     "@types/three": "^0.160.0",
-    "glsl-random": "^0.0.5",
     "leva": "^0.9.35",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

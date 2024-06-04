@@ -20,9 +20,6 @@ importers:
       '@types/three':
         specifier: ^0.160.0
         version: 0.160.0
-      glsl-random:
-        specifier: ^0.0.5
-        version: 0.0.5
       leva:
         specifier: ^0.9.35
         version: 0.9.35(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1244,9 +1241,6 @@ packages:
 
   glsl-noise@0.0.0:
     resolution: {integrity: sha512-b/ZCF6amfAUb7dJM/MxRs7AetQEahYzJ8PtgfrmEdtw6uyGOr+ZSGtgjFm6mfsBkxJ4d2W7kg+Nlqzqvn3Bc0w==}
-
-  glsl-random@0.0.5:
-    resolution: {integrity: sha512-K2SA3OjnylV3ElXBjcGcXDk/aEGPfjxqIG3Wppau7+VkNAuBTok2BljOAriEgjt/lqT9QErOfgc7W2TdSwZAIg==}
 
   graphemer@1.4.0:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
@@ -3074,8 +3068,6 @@ snapshots:
       slash: 3.0.0
 
   glsl-noise@0.0.0: {}
-
-  glsl-random@0.0.5: {}
 
   graphemer@1.4.0: {}
 
