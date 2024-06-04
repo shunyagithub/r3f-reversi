@@ -1,4 +1,5 @@
 # react-three-fiber-simple-reversi
+<img width="1406" alt="r3f-simple-reversi" src="https://github.com/shunyagithub/r3f-reversi/assets/56504519/0a18d460-e7a9-4002-9038-77a572b4881a">
 
 This is a simple reversi game implemented with react-three-fiber.
 
