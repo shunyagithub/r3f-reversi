@@ -1,4 +1,4 @@
-import { MeshProps, ThreeEvent } from "@react-three/fiber";
+import { GroupProps, ThreeEvent } from "@react-three/fiber";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { useDiscStore, useGameStore } from "../store/store";
 import { Edges, Text } from "@react-three/drei";
@@ -8,7 +8,7 @@ const Hint = ({
   id,
   width,
   ...props
-}: { id: number; width: number } & MeshProps) => {
+}: { id: number; width: number } & GroupProps) => {
   const [hovered, hover] = useState(false);
   const placeableDiscs = useDiscStore((state) => state.placeableDiscs);
 
@@ -48,8 +48,6 @@ const Hint = ({
         // 裏返せる石がある場合
         if (flip > 0 && discs[n]?.condition === turn) {
           for (let i = 0; i < flip; i++) {
-            // console.log("n -= vect", n - vect, "turn", turn);
-
             updateDisc({
               id: n - vect,
               condition: turn,
@@ -113,23 +111,21 @@ const Hint = ({
   }, [turn, hovered]);
 
   return (
-    <>
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        {...props}
-        onPointerOver={onPointerOver}
-        onPointerOut={onPointerOut}
-        onClick={onClick}
-      >
-        <circleGeometry args={[width / 2, 32]} />
+    <group rotation={[-Math.PI / 2, 0, 0]} {...props} onClick={onClick}>
+      <mesh>
+        <circleGeometry args={[width / 3, 32]} />
         <meshStandardMaterial
           color={hintColor}
           transparent
-          opacity={placeable ? 1 : 0}
+          opacity={placeable ? (hovered ? 1 : 0.5) : 0}
         />
         {placeable && <Edges color="#444444" />}
       </mesh>
-    </>
+      <mesh onPointerOver={onPointerOver} onPointerOut={onPointerOut}>
+        <planeGeometry args={[width, width]} />
+        <meshStandardMaterial visible={false} />
+      </mesh>
+    </group>
   );
 };
 
