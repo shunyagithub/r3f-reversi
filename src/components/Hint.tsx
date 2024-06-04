@@ -1,6 +1,6 @@
 import { GroupProps, ThreeEvent } from "@react-three/fiber";
 import { useState, useCallback, useEffect, useMemo } from "react";
-import { useDiscStore, useGameStore } from "../store/store";
+import { useGameStore } from "../store/store";
 import { Edges, Text } from "@react-three/drei";
 import { HIDDEN_ID, VECT } from "../reversi";
 
@@ -10,10 +10,10 @@ const Hint = ({
   ...props
 }: { id: number; width: number } & GroupProps) => {
   const [hovered, hover] = useState(false);
-  const placeableDiscs = useDiscStore((state) => state.placeableDiscs);
+  const placeableDiscs = useGameStore((state) => state.placeableDiscs);
 
-  const updateDisc = useDiscStore((state) => state.updateDisc);
-  const discs = useDiscStore((state) => state.discs);
+  const updateDisc = useGameStore((state) => state.updateDisc);
+  const discs = useGameStore((state) => state.discs);
   const turn = useGameStore((state) => state.turn);
   const setTurn = useGameStore((state) => state.setTurn);
 
@@ -97,10 +97,9 @@ const Hint = ({
     [discExists, flipDisk, id, placeable]
   );
 
-  useEffect(
-    () => void (document.body.style.cursor = hovered ? "pointer" : "auto"),
-    [hovered]
-  );
+  useEffect(() => {
+    document.body.style.cursor = hovered ? "pointer" : "auto";
+  }, [hovered]);
 
   const hintColor = useMemo(() => {
     if (turn === 1) {

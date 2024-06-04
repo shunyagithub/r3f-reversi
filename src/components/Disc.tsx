@@ -1,5 +1,5 @@
 import { GroupProps } from "@react-three/fiber";
-import { useDiscStore } from "../store/store";
+import { useGameStore } from "../store/store";
 import * as THREE from "three";
 import { getDiscPosition } from "../reversi";
 import { Edges } from "@react-three/drei";
@@ -22,7 +22,7 @@ export const Disc = (props: GroupProps) => {
 };
 
 const Discs = () => {
-  const discs = useDiscStore((state) => state.discs);
+  const discs = useGameStore((state) => state.discs);
   return discs.map((d, index) => {
     if (d.condition === 0) return null;
 

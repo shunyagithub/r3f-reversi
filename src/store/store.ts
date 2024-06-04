@@ -28,14 +28,19 @@ const getInitDisks = (): Disc[] => {
 
 const initDiscs = getInitDisks();
 
-type DiscState = {
+type GameState = {
   discs: Disc[];
   placeableDiscs: { black: number[]; white: number[] };
   setPlaceableDiscs: (v: { black: number[]; white: number[] }) => void;
   updateDisc: (v: Disc) => void;
+  turn: 1 | 2; // 1: black, 2: white
+  setTurn: (v: 1 | 2) => void;
+  reset: () => void;
+  score: { black: number; white: number };
+  setScore: (v: { black: number; white: number }) => void;
 };
 
-export const useDiscStore = create<DiscState>((set) => ({
+export const useGameStore = create<GameState>((set) => ({
   discs: [...initDiscs],
   placeableDiscs: { black: [], white: [] },
   setPlaceableDiscs: (v) =>
@@ -48,21 +53,15 @@ export const useDiscStore = create<DiscState>((set) => ({
       ),
     }));
   },
-}));
-
-type GameState = {
-  turn: 1 | 2; // 1: black, 2: white
-  setTurn: (v: 1 | 2) => void;
-  reset: () => void;
-  score: { black: number; white: number };
-  setScore: (v: { black: number; white: number }) => void;
-};
-
-export const useGameStore = create<GameState>((set) => ({
   turn: 1,
   setTurn: (v) => set(() => ({ turn: v })),
   reset: () =>
-    set(() => ({ turn: 1, gameover: false, score: { black: 2, white: 2 } })),
+    set(() => ({
+      discs: [...initDiscs],
+      turn: 1,
+      gameover: false,
+      score: { black: 2, white: 2 },
+    })),
   score: { black: 2, white: 2 },
   setScore: (v) => set(() => ({ score: v })),
 }));

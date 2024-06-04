@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useDiscStore, useGameStore } from "./store/store";
+import { useGameStore } from "./store/store";
 
 export const HIDDEN_ID = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 18, 27, 36, 45, 54, 63, 72, 81, 82, 83, 84, 85,
@@ -20,14 +20,14 @@ export const useGame = () => {
   let winner: 0 | 1 | 2 = 0;
   let gameover = false;
 
-  const discs = useDiscStore((state) => state.discs);
+  const discs = useGameStore((state) => state.discs);
   const setTurn = useGameStore((state) => state.setTurn);
 
   // score / winner
   const black = discs.filter((disc) => disc.condition === 1).length;
   const white = discs.filter((disc) => disc.condition === 2).length;
-  const blackPlaceable = useDiscStore((state) => state.placeableDiscs.black);
-  const whitePlaceable = useDiscStore((state) => state.placeableDiscs.white);
+  const blackPlaceable = useGameStore((state) => state.placeableDiscs.black);
+  const whitePlaceable = useGameStore((state) => state.placeableDiscs.white);
 
   if (blackPlaceable.length === 0 && whitePlaceable.length === 0) {
     winner = black > white ? 1 : black < white ? 2 : 0;
